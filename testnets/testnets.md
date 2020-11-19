@@ -3,22 +3,27 @@ title: Joining Testnets
 order: 2
 ---
 
-In this section we will explain how to join testnets, where to find testnet configurations and some scripts to make the process faster.
+In this section we will explain how to join testnets, where to find testnet configurations and some scripts to make the
+process faster.
 
-## Select Your Network
+## Select Network
 
-You can find active and in-active testnet information such as configs and endpoints on [CosmWasm/testnets](https://github.com/CosmWasm/testnets).
+You can find live and deprecated testnet information such as configs and endpoints at
+ [CosmWasm/testnets](https://github.com/CosmWasm/testnets).
 
 ## Setup
 
 Let's start rolling your node and start producing blocks in testnet environment.
 
-**Before starting**, you can use [CosmWasm/tesnets/devops](https://github.com/CosmWasm/testnets/tree/master/devops) that contains easy setup scripts for wasmd
+Before starting, you can use [CosmWasm/tesnets/devops](https://github.com/CosmWasm/testnets/tree/master/devops)
+ that contains easy setup scripts for wasmd
 node, faucet, [block explorer](https://github.com/CosmWasm/big-dipper), lcd, nginx etc. Scripts
-below does the some thing as **devops repo** in essence, just more manual and excludes nginx and system supervisor. Feel free
-to use them.
+below does the some thing as **devops repo** in essence, just more manual and excludes nginx and system supervisor.
+Feel free to use them.
 
-First of all make sure you followed the installation steps in [build requirements section](./build-requirements.md). You should have the required binaries. If you just want to copy and execute the scripts below, make sure to set up environment variables:
+First of all make sure you followed the installation steps in [build requirements section](./build-requirements.md).
+You should have the required binaries. If you just want to copy and execute the scripts below, make sure to set up
+environment variables:
 
 Below is the [heldernet configuration](https://github.com/CosmWasm/testnets/tree/master/heldernet).
 
@@ -41,10 +46,6 @@ export FAUCET="https://faucet.heldernet.cosmwasm.com"
 export SEED_NODE="456ac8ae0f4a1b11e6eb2ddd0ac97857e78e4353@78.47.97.169:26656"
 ```
 
-::: tip
-We have setup different executables for each testnet names after network names like: `corald/coral`, `gaiaflexd/gaiaflex`
-:::
-
 For running these scripts seamlessly, We recommend you to create a directory for CosmWasm tooling:
 `mkdir CosmWasm && cd CosmWasm && export CW_DIR=$(pwd)`
 
@@ -55,14 +56,14 @@ cd wasmd
 # Check which version to use on testnets repo
 git checkout $WASMD_VERSION
 # generate coral executables
-make build # make build-gaiaflex, make build etc...
+make install
 # add the executables to path
 export PATH="${PATH}:$(pwd)/build"
 ```
 
-## Initialize Your Wallet
+## Initialize Wallet
 
-Initialize `coral` and generate validator account:
+Initialize `wasmd` and generate validator account:
 
 ```shell
 wasmcli config chain-id $CHAIN_ID
@@ -85,7 +86,7 @@ wasmcli keys add mywallet
 
 ## Joining Live Testnets
 
-### Run wasmd Node
+### Run wasmd Full Node
 
 ```shell
 export MONIKER=new_validator
@@ -108,16 +109,16 @@ wasmd start --p2p.seeds $SEED_NODE
 
 Now you should be seeing blocks being replayed and your node is catching up with the testnet. This could take a while.
 
-### Become An Active Validator(optional)
+### Become a Validator(optional)
 
-In order to join the network as validator, you need some staking tokens.
-Please ask some in [discord testnets channel](https://docs.cosmwasm.com/chat)
+To become a validator, you need some staking tokens.
+Please ask some at [discord testnets channel](https://docs.cosmwasm.com/chat)
 
 If you want to participate in active block building, you need some coins staked to your validators address.
 
 For those interested in validator stack, here is a good reading source on validator architectures: [certus one blog](https://kb.certus.one/)
 
-**Note**: make sure your validator is synced before upgrading to validator
+**Note**: make sure your validator is synced before upgrading to a validator.
 
 ```shell
 wasmcli tx staking create-validator \
@@ -147,7 +148,7 @@ wasmcli rest-server --node tcp://<host>:<port>
 You need to have your address and informations defined in networks genesis file to join not yet launched testnets.
 Here is the script you can run to take care of it automatically. It uses `wasmd` [network specific executables](https://github.com/CosmWasm/testnets/tree/master/wasmnet):
 :::
-  
+
 ```shell
 cd $CW_DIR
 ## Fork github.com:CosmWasm/testnets to your account and clone.
@@ -173,4 +174,7 @@ After the network is launched you can follow [Joining Live Testnets](#joining-li
 
 ## Deploying Contracts to Testnet
 
-[Getting Started section](../getting-started/intro.md) is the best reading source that teaches you the process of compiling and deploying contracts using a basic smart contract. If you are interested in developing your own contracts, after reading getting started tutorials head to [Hijacking Escrow](../learn/hijack-escrow/intro.md) where you play around with the example escrow contract.
+[Getting Started section](../getting-started/intro.md) is the best reading source that teaches you the process of
+compiling and deploying contracts using a basic smart contract. If you are interested in developing your own contracts,
+after reading getting started tutorials head to [Hijacking Escrow](../learn/hijack-escrow/intro.md) where you play
+around with the example escrow contract.
