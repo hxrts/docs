@@ -19,7 +19,7 @@ to a pre-defined beneficiary. First, clone the repo and try to build the wasm bu
 ```shell
 # get the code
 git clone https://github.com/CosmWasm/cosmwasm-examples
-cd cosmwasm-examples/escrow
+cd cosmwasm-examples/contracts/escrow
 git checkout escrow-0.7.0
 
 # compile the wasm contract with stable toolchain
